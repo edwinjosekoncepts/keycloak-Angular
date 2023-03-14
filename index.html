@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>My App</title>
+
+    <!-- <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net/npm/keycloak-js@21.0.1/dist/keycloak.min.js"> -->
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' http://3.17.48.141:8580/">
+</head>
+
+<body>
+    <h1>Welcome to My App</h1>
+    <button onclick="login()">Login</button>
+
+    <script src="https://cdn.jsdelivr.net/npm/keycloak-js@21.0.1/dist/keycloak.min.js"></script>
+    <script>
+        const keycloak = Keycloak({
+            url: 'http://3.17.48.141:8989/',
+            realm: 'master',
+            clientId: 'angular-client'
+        });
+
+        function login() {
+            keycloak.login();
+        }
+
+        keycloak.init({ onLoad: 'login-required' })
+            .then(authenticated => {
+                console.log('authenticated', authenticated);
+            })
+            .catch(error => {
+                console.error('authentication error', error);
+            });
+    </script>
+</body>
+
+</html>
