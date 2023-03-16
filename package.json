@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "angular15": "node ./node_modules/@angular/cli/bin/ng build  --base-href=/angular15/ --output-hashing=all"
   },
   "private": true,
   "dependencies": {

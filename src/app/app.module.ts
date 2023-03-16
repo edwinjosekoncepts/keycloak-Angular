@@ -11,7 +11,7 @@ function initializeKeyCloak(keycloak: KeycloakService) {
   return async () => {
     let c = await keycloak.init({
       config: {
-        url: 'http://3.17.48.141:8580/auth',
+        url: 'http://qa.exploraai.com/keycloak/auth/',
         realm: 'master',
         clientId: 'oauth-client'
       },
