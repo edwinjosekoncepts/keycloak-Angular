@@ -1,70 +1,25 @@
-import { HttpClientModule } from '@angular/common/http';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { KeycloakAngularModule, KeycloakService } from 'keycloak-angular';
+import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule }   from '@angular/router';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NewComponent } from './new/new.component';
-
-function initializeKeyCloak(keycloak: KeycloakService) {
-  return async () => {
-    let c = await keycloak.init({
-      config: {
-        url: 'http://qa.exploraai.com/keycloak/auth/',
-        realm: 'master',
-        clientId: 'oauth-client'
-      },
-      initOptions: {
-        onLoad: "login-required",
-        flow: "standard",
-        checkLoginIframe: false
-      },
-      enableBearerInterceptor: true,
-      loadUserProfileAtStartUp: true,
-    })
-
-    console.log(c);
-
-    // try {
-    //   let c = keycloak.init({
-    //     config: {
-    //       url: 'http://3.17.48.141:8989/',
-    //       realm: 'master',
-    //       clientId: 'oauth-client'
-    //     },
-    //     initOptions: {
-    //       onLoad: 'login-required',
-    //       checkLoginIframe: false
-    //     },
-    //     enableBearerInterceptor: true
-    //   });
-    //   console.log('Keycloak is initialized');
-    // } catch (error) {
-    //   console.error('Error initializing Keycloak', error);
-    // }
-  }
-}
+import { HomeComponent } from './home.component';
+import { FooComponent } from './foo.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NewComponent
+    HomeComponent,
+    FooComponent    
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     HttpClientModule,
-    KeycloakAngularModule
+    RouterModule.forRoot([
+     { path: '', component: HomeComponent, pathMatch: 'full' }], {onSameUrlNavigation: 'reload'})
   ],
-  providers: [
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initializeKeyCloak,
-      multi: true,
-      deps: [KeycloakService]
-    }
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
